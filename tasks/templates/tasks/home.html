@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-screen flex items-start justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 mt-10">
+    <main class="w-full max-w-3xl p-8 bg-white dark:bg-gray-800 shadow-lg rounded h-[80vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-3xl font-bold">Minhas Tarefas</h2>
+            <a href="{% url 'create_task' %}" class="px-4 py-2 bg-blue-500 text-white rounded">➕ Nova Tarefa</a>
+        </div>
+
+        {% if tasks %}
+        <ul class="space-y-4">
+            {% for task in tasks %}
+                <li class="p-4 bg-gray-100 dark:bg-gray-700 shadow rounded flex justify-between items-center border border-gray-300 dark:border-gray-700">
+                    <div>
+                        <h3 class="font-semibold text-lg">{{ task.title }}</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">{{ task.description }}</p>
+                        <span class="block mt-2 {% if task.completed %}text-green-500{% else %}text-red-500{% endif %}">
+                            {% if task.completed %}✔️ Concluído{% else %}❌ Pendente{% endif %}
+                        </span>
+                    </div>
+                    <div class="flex space-x-3">
+                        {% if not task.completed %}
+                            <form action="{% url 'complete_task' task.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="px-3 py-2 bg-green-500 text-white rounded">✅ Completar</button>
+                            </form>
+                        {% endif %}
+                        <a href="{% url 'edit_task' task.id %}" class="px-3 py-2 bg-blue-500 text-white rounded">✏️ Editar</a>
+                        <a href="{% url 'delete_task' task.id %}" class="px-3 py-2 bg-red-500 text-white rounded">🗑️ Excluir</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p class="text-center text-gray-500 text-lg">Você ainda não tem tarefas.</p>
+        {% endif %}
+    </main>
+</div>
+{% endblock %}

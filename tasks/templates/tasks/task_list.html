@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>To-Do List</title>
+</head>
+<body class="bg-gray-900 text-gray-200 flex flex-col items-center p-10">
+    <h1 class="text-3xl font-bold">Minhas Tarefas</h1>
+    
+    <form action="{% url 'add_task' %}" method="POST" class="mt-4 flex">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Nova tarefa" class="p-2 bg-gray-700 rounded-l">
+        <button type="submit" class="p-2 bg-blue-500 rounded-r">Adicionar</button>
+    </form>
+
+    <ul class="mt-6">
+        {% for task in tasks %}
+            <li class="flex items-center gap-4 p-2 bg-gray-800 rounded my-2">
+                <span class="{% if task.completed %} line-through {% endif %}">{{ task.title }}</span>
+                <a href="{% url 'complete_task' task.id %}" class="text-green-400">✔️</a>
+                <a href="{% url 'delete_task' task.id %}" class="text-red-400">🗑</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'logout' %}" class="mt-4 text-red-500">Sair</a>
+</body>
+</html>

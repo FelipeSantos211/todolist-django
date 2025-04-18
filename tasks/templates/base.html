@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}To-Do List{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white h-screen overflow-hidden">
+
+    <nav class="bg-gray-800 p-4 flex justify-between ">
+        <a href="{% url 'task_list' %}" class="text-xl font-bold ml-4">To-Do List</a>
+        <div>
+            {% if user.is_authenticated %}
+                <span class="px-4 py-2 bg-gray-600 rounded">Olá, {{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="px-4 py-2 bg-red-600 rounded mr-4">Sair</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="px-4 py-2 bg-blue-600 rounded">Login</a>
+                <a href="{% url 'register' %}" class="px-4 py-2 bg-green-600 rounded">Cadastrar</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-6">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="bg-green-500 p-2 rounded mb-2">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
