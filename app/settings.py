@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://todolist-django-production-42f3.up.railway.app',
+    'http://localhost:8000',
 ]
 
 
