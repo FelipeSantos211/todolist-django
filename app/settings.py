@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
-    'https://todolist-django-production-da2e.up.railway.app/'
+    'https://todolist-django-production-da2e.up.railway.app',
 ]
 
 
